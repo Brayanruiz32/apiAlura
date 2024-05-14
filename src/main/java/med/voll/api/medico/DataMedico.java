@@ -1,6 +1,8 @@
-package med.voll.api.dto;
+package med.voll.api.medico;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
+
+import med.voll.api.direccion.DataDireccion;
 
 public record DataMedico(
 
