@@ -1,5 +1,6 @@
 package med.voll.api.infra;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import javax.swing.text.html.parser.Entity;
@@ -21,8 +22,8 @@ public class TratadorDeErrores {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity tratarError400(MethodArgumentNotValidException e) {
-
-        return ResponseEntity.badRequest().body(e.getFieldErrors().stream().map(err -> err.getField()+ ": "+err.getDefaultMessage()).toList());
+        List<DataErrorMensaje> errores = e.getFieldErrors().stream().map(DataErrorMensaje::new).toList();
+        return ResponseEntity.badRequest().body(errores);
 
     }
 
