@@ -1,5 +1,7 @@
 package med.voll.api.medico;
 
+import javax.xml.crypto.Data;
+
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -13,7 +15,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import med.voll.api.direccion.Direccion;
-
 
 @Entity
 @Getter
@@ -30,8 +31,8 @@ public class Medico {
         this.especialidad = datos.especialidad();
         this.direccion = new Direccion(datos.direccion());
         this.telefono = datos.telefono();
-        
-    } 
+        this.estado = true;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,11 +45,31 @@ public class Medico {
 
     private String documento;
 
+    private boolean estado;
+
     private String telefono;
 
     private String email;
 
     @Embedded
     private Direccion direccion;
+
+    public void actualizarDatos(DataActualizarMedico datos) {
+        if (datos.nombre() != null) {
+            this.nombre = datos.nombre();
+        }
+        if (datos.documento() != null) {
+            this.documento = datos.documento();
+        }
+
+        if (datos.direccion() != null) { 
+            this.direccion = direccion.actualizarDatos(datos.direccion());
+        }
+
+    }
+
+    public void actualizarEstadoMedico() {
+        this.estado = false;
+    }
 
 }
