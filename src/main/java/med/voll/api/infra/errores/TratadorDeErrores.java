@@ -1,4 +1,4 @@
-package med.voll.api.infra;
+package med.voll.api.infra.errores;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -6,6 +6,7 @@ import java.util.NoSuchElementException;
 import javax.swing.text.html.parser.Entity;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -25,6 +26,16 @@ public class TratadorDeErrores {
         List<DataErrorMensaje> errores = e.getFieldErrors().stream().map(DataErrorMensaje::new).toList();
         return ResponseEntity.badRequest().body(errores);
 
+    }
+
+    public record DataErrorMensaje(
+            String field,
+
+            String mensaje) {
+        public DataErrorMensaje(FieldError err) {
+            this(err.getField(), err.getDefaultMessage());
+
+        }
     }
 
 }
