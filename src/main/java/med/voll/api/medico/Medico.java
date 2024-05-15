@@ -7,6 +7,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -19,23 +20,33 @@ import med.voll.api.direccion.Direccion;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
+@Table(name = "medicos")
 public class Medico {
+
+    public Medico(DataMedico datos) {
+        this.nombre = datos.nombre();
+        this.email = datos.email();
+        this.documento = datos.documento();
+        this.especialidad = datos.especialidad();
+        this.direccion = new Direccion(datos.direccion());
+        this.telefono = datos.telefono();
+        
+    } 
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
 
     private String nombre;
 
     @Enumerated(EnumType.STRING)
     private Especialidad especialidad;
 
-    private int documento;
+    private String documento;
+
+    private String telefono;
 
     private String email;
-
-    private int telefono;
 
     @Embedded
     private Direccion direccion;

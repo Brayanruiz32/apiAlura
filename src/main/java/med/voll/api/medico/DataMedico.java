@@ -1,23 +1,36 @@
 package med.voll.api.medico;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
-
+import io.micrometer.common.lang.NonNull;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import med.voll.api.direccion.DataDireccion;
 
-public record DataMedico(
 
+public record DataMedico(
+    @NotBlank(message = "No puede ser vacio el nombre p ctm >:v")
     String nombre, 
 
+    
+    @NotNull
     Especialidad especialidad, 
 
-    int documento, 
+    @NotBlank
+    @Pattern(regexp = "\\d{4,6}")
+    String documento, 
 
+    @NotBlank
+    @Email
     String email, 
 
-    int telefono, 
+    @NotNull
+    String telefono,
 
+    @NotNull
+    @Valid
     DataDireccion direccion
-
 
 ) {
 }
